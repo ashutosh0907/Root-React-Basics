@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>sum</title>
+    <script src="react.development.js"></script>
+    <script src="react-dom.development.js"></script>
+    <script src="babel.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+</head>
+
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        class Sum extends React.Component {
+            constructor() {
+                super();
+                this.state = {
+                    dataObj: {
+
+                    },
+                    sum: 0,
+                }
+                this.showsum = this.showsum.bind(this);
+                this.onChange = this.onChange.bind(this);
+            }
+            showsum() {
+                console.log(this.state.dataObj);
+                var o = new XMLHttpRequest();
+                o.open('post', 'http://localhost:2020/marks/get-sum');
+                o.setRequestHeader('Content-Type', 'application/json');
+                o.send(JSON.stringify(this.state.dataObj));
+                o.onload = (res) => {
+                    console.log(res.target.response)
+                    this.setState({
+                        sum: `${res.target.response}`
+                        // o.responseText --> also gives us response 
+                    })
+                }
+                o.error = (res) => {
+                    this.setState({
+                        sum: `${res.target.response}`
+                    })
+                }
+            }
+            onChange(eve) {
+                const { name, value } = eve.target;
+                console.log(value);
+                this.setState({
+                    dataObj: {
+                        ...this.state.dataObj,
+                        [name]: value,
+                    }
+                })
+            }
+            render() {
+                return <div>
+                    <p>Number 1:
+                        <input name="num1" type="number" onChange={this.onChange} />
+                    </p>
+                    <p>Number 2:
+                        <input name="num2" type="number" onChange={this.onChange} />
+                    </p>
+                    <p>
+                        <button onClick={this.showsum}>
+                            Show Result
+                        </button>
+                    </p>
+                    <h1>
+                        {this.state.sum}
+                    </h1>
+                </div>
+            }
+        }
+        ReactDOM.render(<Sum />, document.getElementById('root'));
+    </script>
+</body>
+
+</html>

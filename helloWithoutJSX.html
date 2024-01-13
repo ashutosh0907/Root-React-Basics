@@ -1,0 +1,48 @@
+<script src="react.development.js"></script>
+<script src="react-dom.development.js"></script>
+<script src="babel.js"></script>
+
+<div id="root"></div>
+
+<style>
+    .box {
+        width: 400px;
+        height: 200px;
+        border: 1px solid red;
+        /* inline-block means your width */
+        /* inline means content width */
+        /* block means parent width */
+        display: inline-block;
+        text-align: center;
+        line-height: 200px;
+    }
+</style>
+
+<script type="text/babel">
+
+    const Box = (data) => {
+        if (data.num2) {
+            return <h1 className="box">Ashutosh {data.num} + {data.num2}</h1>
+        } else {
+            return <h1 className="box">Ashutosh {data.num}</h1>
+        }
+    }
+
+    class App extends React.Component {
+        render() {
+            return <div>
+                <div><Box num="1" num2="11" /><Box num="2" /><Box num="3" /></div>
+                <div><Box num="4" /><Box num="5" /><Box num="6" /></div>
+                <div><Box num="7" /><Box num="8" /><Box num="9" /></div>
+            </div>
+        }
+    }
+
+    // const App = () => {
+    //     // return <h1>Hello Ashutosh</h1>
+    //     const element = React.createElement("h1", { id: "h1", class: "c1" }, "Hello Ashutosh");
+    //     return element;
+    // }
+
+    ReactDOM.render(<App />, document.getElementById("root"))
+</script>

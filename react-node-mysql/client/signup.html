@@ -1,0 +1,223 @@
+<script src="react.development.js"></script>
+<script src="react-dom.development.js"></script>
+<script src="babel.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+
+<style>
+    .container {
+        background-color: beige;
+        width: 400px;
+        justify-content: center;
+        text-align: center;
+    }
+</style>
+<div id="root"></div>
+<script type="text/babel">
+
+    class Signup extends React.Component {
+        constructor() {
+            super();
+            this.state = {
+                dataObj: {
+                    name: '',
+                    uid: '',
+                    pwd: '',
+                    address: '',
+                    country: 'IND',
+                    gender: 'M',
+                    hobbies: 'cri'
+                },
+                isProcessing: false,
+                result: '',
+                students: [],
+                showTable: false
+            }
+            this.cbArr = ['cri']
+            this.fnOnChange = this.fnOnChange.bind(this);
+            this.fnSignup = this.fnSignup.bind(this);
+            this.rerender = this.rerender.bind(this)
+        }
+        rerender() {
+            var o = new XMLHttpRequest();
+            o.open('get', 'http://localhost:2020/std/get-std');
+            o.setRequestHeader('Content-Type', 'application/json');
+            o.send();
+            o.onload = () => {
+                let res = o.responseText;
+                console.log(res)
+                this.setState({
+                    students: JSON.parse(res),
+                    showTable: true
+                })
+            }
+            o.onerror = () => {
+                console.log("Error");
+            }
+        }
+        componentDidMount() {
+            var o = new XMLHttpRequest();
+            o.open('get', 'http://localhost:2020/std/get-std');
+            o.setRequestHeader('Content-Type', 'application/json');
+            o.send();
+            o.onload = () => {
+                let res = o.responseText;
+                console.log(res)
+                this.setState({
+                    students: JSON.parse(res),
+                    showTable: true
+                })
+            }
+            o.onerror = () => {
+                console.log("Error");
+            }
+        }
+        fnOnChange(eve) {
+            // checked below in Obj Destruction is specific to the checkbox
+            const { name, value, type, checked } = eve.target;
+            if (type == 'checkbox') {
+                if (checked) {
+                    this.cbArr.push(name);
+                } else {
+                    this.cbArr.splice(this.cbArr.indexOf(name), 1);
+                }
+                this.setState({
+                    dataObj: {
+                        ...this.state.dataObj,
+                        'hobbies': this.cbArr.join(),
+                    }
+                })
+            }
+            else {
+                this.setState({
+                    dataObj: {
+                        ...this.state.dataObj,
+                        [name]: value,
+                    },
+                })
+            }
+        }
+
+        fnSignup() {
+            console.log("this.state.dataObj", this.state.dataObj);
+            this.setState({
+                isProcessing: true
+            })
+            var o = new XMLHttpRequest();
+            o.open('post', 'http://localhost:2020/std/std-reg');
+            o.setRequestHeader('Content-Type', 'application/json');
+            o.send(JSON.stringify(this.state.dataObj));
+            o.onload = () => {
+                let res = o.responseText;
+                console.log("=========>", res);
+                let msg = "Failed, Try again later."
+                if (res > 0) {
+                    msg = "Inserted Successfully."
+                }
+                this.setState({
+                    isProcessing: false,
+                    result: msg,
+                    dataObj: {
+                        name: '',
+                        uid: '',
+                        pwd: '',
+                        address: '',
+                        country: 'IND',
+                        gender: 'M',
+                        hobbies: 'cri'
+                    }
+                })
+                this.rerender();
+            }
+            o.error = () => {
+                console.log("Error");
+                this.setState({
+                    isProcessing: false
+                })
+            }
+        }
+
+
+        render() {
+            const { name, uid, pwd, address, country, gender, hobbies } = this.state.dataObj;
+            const isCri = hobbies.includes('cri');
+            const isFb = hobbies.includes('fb');
+            const isChe = hobbies.includes('che');
+            return (
+                <div>
+                    <div className="Container">
+                        <h1>Signup</h1>
+                        <p>
+                            Name: <input value={name} name="name" onChange={this.fnOnChange} />
+                        </p>
+                        <p>
+                            Userid: <input value={uid} name="uid" onChange={this.fnOnChange} />
+                        </p>
+                        <p>
+                            Password: <input value={pwd} type="password" name="pwd" onChange={this.fnOnChange} />
+                        </p>
+                        <p>
+                            Gender:
+                            <input checked={gender == 'M'} type="radio" name="gender" value='M' onChange={this.fnOnChange} />Male
+                            <input checked={gender == 'F'} type="radio" name="gender" value='F' onChange={this.fnOnChange} />Female
+                        </p>
+                        <p>
+                            Hobbies:
+                            <input checked={isCri} type="checkbox" name="cri" onChange={this.fnOnChange} />Cricket
+                            <input checked={isFb} type="checkbox" name="fb" onChange={this.fnOnChange} />Football
+                            <input checked={isChe} type="checkbox" name="che" onChange={this.fnOnChange} />Chess
+                        </p>
+                        <p>
+                            Country:
+                            <select name="country" onChange={this.fnOnChange}>
+                                <option>---</option>
+                                <option selected={country == 'IND'} value="IND">India</option>
+                                <option selected={country == 'US'} value="US">US</option>
+                                <option selected={country == 'CHI'} value="CHI">China</option>
+                            </select>
+                        </p>
+                        <p>
+                            <b>Address:</b> <textarea name="address" onChange={this.fnOnChange}></textarea>
+                        </p>
+                        <p>
+                            <button disabled={this.state.isProcessing} onClick={this.fnSignup} className="btn btn-success">SignUp</button>
+                            {this.state.isProcessing && <span>processing...</span>}
+                            <p>{this.state.result}</p>
+                        </p>
+                    </div>
+                    <div>
+                        {
+                            this.state.showTable &&
+                            <table border="1px">
+                                <thead>
+                                    <tr>
+                                        {
+                                            Object.keys(this.state.students[0]).map((val, index) => {
+                                                return <th key={index}>{val}</th>
+                                            })
+                                        }
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {
+                                        this.state.students.map((val, index) => {
+                                            return <tr>
+                                                {
+                                                    Object.entries(val).map((v, i) => {
+                                                        return <td>{val[v[0]]}</td>
+                                                    })
+                                                }
+                                            </tr>
+                                        })
+                                    }
+                                </tbody>
+                            </table>
+                        }
+                    </div>
+                </div>
+            )
+        }
+    }
+
+    ReactDOM.render(<Signup />, document.getElementById('root'))
+</script>

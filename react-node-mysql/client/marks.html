@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="react.development.js"></script>
+    <script src="react-dom.development.js"></script>
+    <script src="babel.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+
+</head>
+
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        class Marks extends React.Component {
+            constructor() {
+                super();
+                this.state = {
+                    dataObj: {
+
+                    }
+                }
+                this.fnOnChange = this.fnOnChange.bind(this);
+                this.entryMarks = this.entryMarks.bind(this);
+            }
+            fnOnChange(eve) {
+                console.log(eve.target.value)
+                const { name, value } = eve.target;
+                this.setState({
+                    dataObj: {
+                        ...this.state.dataObj,
+                        [name]: value
+                    }
+                })
+            }
+            entryMarks() {
+                console.log(this.state.dataObj);
+                var o = new XMLHttpRequest();
+                o.open('post', 'http://localhost:2020/marks/std-insert-marks');
+                o.setRequestHeader('Content-Type', 'application/json');
+                o.send(JSON.stringify(this.state.dataObj));
+                o.onload = () => {
+                    console.log('INSERT SUCCESS');
+                }
+                o.error = () => {
+                    console.log('INSERT FALIURE');
+                }
+            }
+            render() {
+                return <div>
+                    <h1>Signup</h1>
+                    <p>
+                        Userid: <input name="uid" onChange={this.fnOnChange} />
+                    </p>
+                    <p>
+                        Name: <input name="name" onChange={this.fnOnChange} />
+                    </p>
+                    <p>
+                        Marks: <input name="marks" onChange={this.fnOnChange} />
+                    </p>
+                    <p>
+                        <button onClick={this.entryMarks} className="btn btn-primary">Save Marks</button>
+                    </p>
+                </div>
+            }
+        }
+        ReactDOM.render(<Marks />, document.getElementById('root'))
+    </script>
+</body>
+
+</html>

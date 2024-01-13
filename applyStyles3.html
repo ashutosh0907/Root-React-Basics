@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apply styles with ternary</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="babel.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+    <style>
+        .red {
+            color: red;
+        }
+
+        .green {
+            color: blueviolet;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        class App extends React.Component {
+            constructor() {
+                super();
+                this.state = {
+                    res: "",
+                }
+            }
+            fnClick() {
+                let no = this.refs.noRef.value;
+                let result = "Odd"
+                if (no % 2 == 0) {
+                    result = "Even"
+                }
+                this.setState({
+                    res: result,
+                })
+            }
+
+            render() {
+                // Object Destruction 
+                let { res } = this.state;
+                return <div>
+                    <p>No : <input ref="noRef" type="text" /></p>
+                    <p>
+                        <button onClick={this.fnClick.bind(this)}>
+                            Click
+                        </button>
+                    </p>
+                    <h1 className={res == 'Even' ? 'red' : 'green'}>{this.state.res}</h1>
+                </div>
+            }
+        }
+
+        ReactDOM.render(<App />, document.getElementById("root"))
+    </script>
+</body>
+
+</html>

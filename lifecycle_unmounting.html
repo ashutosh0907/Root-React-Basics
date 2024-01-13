@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lifecycle</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="babel.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <style>
+    </style>
+</head>
+
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        class MyUnmount extends React.Component {
+            componentWillUnmount() {
+                console.log("componentWillUnmount");
+            }
+            render() {
+                return <div>
+                    <h1>Unmount Component Load</h1>
+                </div>
+            }
+        }
+        class App extends React.Component {
+            constructor() {
+                console.log("constructor called")
+                super();
+                this.state = {
+                    load: true,
+                    name: 'Ashutosh'
+                }
+            }
+            static getDerivedStateFromProps() {
+                console.log("getDerivedStateFromProps");
+                return null;
+            }
+
+            shouldComponentUpdate(props, state) {
+                console.log("shouldComponentUpdate", state);
+                return true;
+            }
+            render() {
+                console.log("render called")
+                const { load, name } = this.state;
+                return <div>
+                    {load && <MyUnmount />}
+                    <h1>{name}</h1>
+                    <button onClick={this.change.bind(this)}>Change</button>
+                </div>
+            }
+            getSnapshotBeforeUpdate(props, state) {
+                console.log("getSnapshotBeforeUpdate", state);
+                return null;
+            }
+            componentDidUpdate() {
+                console.log("componentDidUpdate");
+            }
+            componentDidMount() {
+                // Called once on initial page render
+                console.log("AJAX CALL -> componentDidMount")
+            }
+
+            change() {
+                this.setState({
+                    name: 'Mohapatra',
+                })
+            }
+
+
+            unload() {
+                this.setState({
+                    load: false,
+                })
+            }
+        }
+
+        ReactDOM.render(<App />, document.getElementById("root"))
+    </script>
+</body>
+
+</html>

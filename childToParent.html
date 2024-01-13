@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>React App</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="babel.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+    <style>
+    </style>
+</head>
+
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        class Child extends React.Component {
+            constructor() {
+                super();
+                this.i = 0;
+            }
+            render() {
+                // debugger;
+                return <div>
+                    <h1>Child Component {this.props.func(this.i++)}</h1>
+                </div>
+            }
+        }
+        class App extends React.Component {
+            constructor() {
+                super();
+                this.state = {
+                    name: 'Ashutosh'
+                }
+                this.f1 = this.f1.bind(this);
+            }
+            f1(name) {
+                console.log("f1 called")
+                // setTimeout(() => {
+                //     this.setState({
+                //         name: name
+                //     })
+                // }, 1000)
+            }
+
+            render() {
+                return <div>
+                    <h1>Parent Component {this.state.name}</h1>
+                    <Child func={this.f1} />
+                </div>
+            }
+        }
+
+
+        ReactDOM.render(<App />, document.getElementById("root"))
+    </script>
+</body>
+
+</html>

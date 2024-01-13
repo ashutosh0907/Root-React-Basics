@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>React App</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="babel.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+    <style>
+    </style>
+</head>
+
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        class Child extends React.Component {
+            constructor() {
+                super();
+                this.n = 20;
+            }
+            render() {
+                return <div>
+                    <p>Child Component {this.props.func(this.n)}</p>
+                </div>
+            }
+        }
+        class App extends React.Component {
+            func(param) {
+                console.log("Value from child component is ", param);
+            }
+            render() {
+                return <div>
+                    <p>Parent Component</p>
+                    <Child func={this.func} />
+                </div>
+            }
+        }
+
+
+        ReactDOM.render(<App />, document.getElementById("root"))
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Addition Operation</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="babel.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+    <style>
+        .container {
+            background-color: #1111;
+            padding: 20px;
+            width: 300px;
+            justify-content: center;
+            align-items: center;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        class App extends React.Component {
+            // 2
+            fnAdd() {
+                //statements
+                // alert("fnAdd called")
+                // let n1Ref = document.getElementById("n1");
+                // let n1 = n1Ref.value;
+                // n1 = Number(n1);
+                let n1 = Number(document.getElementById("n1").value);
+                // let n2Ref = document.getElementById("n2");
+                // let n2 = n2Ref.value;
+                // n2 = Number(n2);
+                let n2 = Number(document.getElementById("n2").value);
+                let sum = n1 + n2;
+                // alert("the summ is :" + sum)
+                document.getElementById("resultRef").innerHTML = `the sum is : ${sum}`
+            }
+
+            render() {
+                // 1
+                return <div className="container">
+                    <p>
+                        <b>Number1 : </b> <input id="n1" />
+                    </p>
+                    <p>
+                        <b>Number2 : </b> <input id="n2" />
+                    </p>
+                    <p>
+                        <button onClick={this.fnAdd}>Add</button>
+                    </p>
+                    <h1 id="resultRef">
+                    </h1>
+
+                </div>
+            }
+        }
+
+        ReactDOM.render(<App name="ashu" />, document.getElementById("root"))
+    </script>
+</body>
+
+</html>

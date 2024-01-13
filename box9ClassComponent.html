@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>React App</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="babel.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+    <style>
+        /* body {
+            background-color: magenta;
+        } */
+
+        .box {
+            width: 100px;
+            height: 100px;
+            border: 1px solid red;
+            display: inline-block;
+            text-align: center;
+            line-height: 100px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        // const Box = () => {
+        //     return <div className="box">{ }</div>
+        // }
+
+
+        // class Box extends React.Component {
+        //     render(data) {
+        //         return <div classNa="box">{data.num}</div>
+        //     }
+        // }
+
+        class Box extends React.Component {
+            constructor() {
+
+            }
+            render() {
+                debugger;
+                return <div className="box">{this.props.num}</div>
+            }
+        }
+
+
+
+        class App extends React.Component {
+            render() {
+                return <div>
+                    <div><Box num="1" /><Box num="2" /><Box num="3" /></div>
+                    <div><Box num="4" /><Box num="5" /><Box num="6" /></div>
+                    <div><Box num="7" /><Box num="8" /><Box num="9" /></div>
+                </div>
+            }
+        }
+
+        ReactDOM.render(<App />, document.getElementById("root"))
+    </script>
+</body>
+
+</html>

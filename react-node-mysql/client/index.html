@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- This is just for testing and practice -->
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="react.development.js"></script>
+    <script src="react-dom.development.js"></script>
+    <script src="babel.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <style>
+        .container {
+            background-color: red;
+            width: 100px;
+            height: 100px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="box">
+    </div>
+    <script type="text/babel">
+        const App = () => {
+            return <div className="container"></div>
+        }
+        class Signup extends React.Component {
+            constructor() {
+                super();
+                this.arr = []
+                this.state = {
+                    data: {
+
+                    }
+                }
+                this.onChangeValue = this.onChangeValue.bind(this);
+                this.signup = this.signup.bind(this);
+            }
+
+            onChangeValue(event) {
+                console.log(event.target.value);
+                const { name, type, value, checked } = event.target;
+                if (type == 'checkbox') {
+                    if (checked) {
+                        this.arr.push(name);
+                    } else {
+                        this.arr.splice(this.arr.indexOf(name), 1);
+                    }
+                    this.setState({
+                        data: {
+                            ...this.state.data,
+                            'hobbies': this.arr.join()
+                        }
+                    })
+                } else {
+                    this.setState({
+                        data: {
+                            ...this.state.data,
+                            [name]: value
+                        }
+                    })
+                }
+            }
+
+            signup() {
+                console.log(this.state.data);
+            }
+            render() {
+                return <div>
+                    <App />
+                    <p>
+                        Name : <input name="name" onChange={this.onChangeValue} />
+                    </p>
+                    <p>
+                        Hobbies :
+                    </p>
+                    <p>
+                        <input type="checkbox" name="football" onChange={this.onChangeValue} />Football
+                        <input type="checkbox" name="cricket" onChange={this.onChangeValue} />Cricket
+                        <input type="checkbox" name="chess" onChange={this.onChangeValue} />Chess
+                    </p>
+                    <button type="submit" onClick={this.signup}>
+                        Submit
+                    </button>
+                </div>
+            }
+        }
+        ReactDOM.render(<Signup />, document.getElementById('box'))
+    </script>
+</body>
+
+</html>

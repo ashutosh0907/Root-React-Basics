@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Addition Operation</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="babel.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+    <style>
+        .container {
+            background-color: #1111;
+            padding: 20px;
+            width: 300px;
+            justify-content: center;
+            align-items: center;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        class App extends React.Component {
+            constructor() {
+                super();
+                this.state = {
+                    res: "",
+                    clr: ""
+                }
+            }
+            fnClick() {
+                let no = this.refs.noRef.value;
+                let result = "Odd"
+                let color = "red"
+                if (no % 2 == 0) {
+                    result = "Even"
+                    color = 'green'
+                }
+                this.setState({
+                    res: result,
+                    clr: color
+                })
+            }
+
+            render() {
+                return <div>
+                    <p>No : <input ref="noRef" type="text" /></p>
+                    <p>
+                        <button onClick={this.fnClick.bind(this)}>
+                            Click
+                        </button>
+                    </p>
+                    <h1 style={{
+                        color: this.state.clr
+                    }}>{this.state.res}</h1>
+                </div>
+            }
+        }
+
+        ReactDOM.render(<App />, document.getElementById("root"))
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>React App</title>
+    <!-- Recognize The Component -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <!-- Compilation of JSX -->
+    <script src="babel.js"></script>
+    <!-- Render The component three arguments  -->
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+</head>
+
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+
+
+        const Hello = () => {
+            return <h1>Hello World</h1>
+        }
+
+        function App() {
+            // Babel is going to check at component level only 
+            // return <h1>Hello React 1</h1><h1>Hello React 1</h1><h1>Hello React 1</h1>
+            // Must be enclosed between single enclosing tag 
+            return <div><Hello /><Hello /><Hello /></div>
+        }
+        ReactDOM.render(<App />, document.getElementById("root"), function () {
+            alert("Content Placed inside container")
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Addition Operation</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="babel.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous"> -->
+    <style>
+        .number {
+            width: 80px;
+            height: 80px;
+            background-color: greenyellow;
+            align-items: center;
+            line-height: 80px;
+            text-align: center;
+            display: inline-block;
+            margin: 4px;
+        }
+
+        .opreation {
+            width: 80px;
+            height: 40px;
+            background-color: orangered;
+            align-items: center;
+            line-height: 80px;
+            text-align: center;
+            display: inline-block;
+            margin: 4px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        class Number extends React.Component {
+            constructor() {
+                super();
+                this.callMethod = this.callMethod.bind(this);
+            }
+            callMethod() {
+                this.props.funCalculate(this.props.num)
+            }
+            render() {
+                return <div onClick={this.callMethod} className="number">
+                    {this.props.num}
+                </div>
+            }
+        }
+        class Opreation extends React.Component {
+            constructor() {
+                super();
+                this.passOperation = this.passOperation.bind(this);
+            }
+            passOperation() {
+                this.props.funCalculate();
+            }
+            render() {
+                return <div onClick={this.callMethod} className="opreation">
+                    {this.props.num}
+                </div>
+            }
+        }
+        class App extends React.Component {
+            constructor() {
+                super();
+                this.state = {
+                    num1: '',
+                    num2: '',
+                    op: '',
+                }
+                this.funCalculate = this.funCalculate.bind(this);
+            }
+            funCalculate(num) {
+
+            }
+            render() {
+                return <div>
+                    <div>
+                        <Number num="1" funCalculate={this.funCalculate} />
+                        <Number num="2" funCalculate={this.funCalculate} />
+                        <Number num="3" funCalculate={this.funCalculate} />
+                    </div>
+                    <div>
+                        <Number num="4" funCalculate={this.funCalculate} />
+                        <Number num="5" funCalculate={this.funCalculate} />
+                        <Number num="6" funCalculate={this.funCalculate} />
+                    </div>
+                    <div>
+                        <Number num="7" funCalculate={this.funCalculate} />
+                        <Number num="8" funCalculate={this.funCalculate} />
+                        <Number num="9" funCalculate={this.funCalculate} />
+                    </div>
+                    <div>
+                        <Opreation op="+" funCalculate={this.funCalculate} />
+                        <Opreation op="-" funCalculate={this.funCalculate} />
+                        <Opreation op="*" funCalculate={this.funCalculate} />
+                    </div>
+                </div>
+            }
+        }
+
+        ReactDOM.render(<App />, document.getElementById("root"))
+    </script>
+</body>
+
+</html>

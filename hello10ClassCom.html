@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="react.development.js"></script>
+    <script src="react-dom.development.js"></script>
+    <script src="babel.js"></script>
+    <style>
+        .nameContainer {
+            background-color: red;
+            display: inline-block;
+            height: 100px;
+            width: 100px;
+            font-size: small;
+            margin-left: 10px;
+            justify-content: center;
+            align-items: center;
+            line-height: 70px;
+            border: 2px solid black;
+            padding: 20px;
+        }
+
+        .text {
+            margin-left: 10px;
+
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+
+        // const Name = () => {
+        //     return <h1 className="nameContainer"><p className="text">Hello Ashutosh</p></h1>
+        // }
+        class Hello extends React.Component {
+            constructor() {
+                super();
+            }
+            render() {
+                return <h1 className="nameContainer">Hello</h1>
+            }
+        }
+        class App extends React.Component {
+            constructor() {
+                super();
+            }
+            render() {
+                return <div><Hello /><Hello /><Hello /></div>
+            }
+        }
+
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+
+</body>
+
+</html>
